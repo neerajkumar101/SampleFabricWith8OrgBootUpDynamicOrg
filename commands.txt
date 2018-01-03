@@ -1,0 +1,835 @@
+
+#exec into cli in a new window
+
+docker exec -it cli bash
+
+export ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+
+export CHANNEL_NAME=mychannel
+
+#======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/users/Admin\@org3.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org3.example.com:7051 && export CORE_PEER_LOCALMSPID="Org3MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/peers/peer0.org3.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/users/Admin\@org3.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org3.example.com:7051 && export CORE_PEER_LOCALMSPID="Org3MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org3.example.com/peers/peer1.org3.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.example.com/users/Admin\@org4.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org4.example.com:7051 && export CORE_PEER_LOCALMSPID="Org4MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.example.com/peers/peer0.org4.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.example.com/users/Admin\@org4.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org4.example.com:7051 && export CORE_PEER_LOCALMSPID="Org4MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org4.example.com/peers/peer1.org4.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.example.com/users/Admin\@org5.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org5.example.com:7051 && export CORE_PEER_LOCALMSPID="Org5MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.example.com/peers/peer0.org5.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.example.com/users/Admin\@org5.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org5.example.com:7051 && export CORE_PEER_LOCALMSPID="Org5MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org5.example.com/peers/peer1.org5.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org6.example.com/users/Admin\@org6.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org6.example.com:7051 && export CORE_PEER_LOCALMSPID="Org6MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org6.example.com/peers/peer0.org6.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org6.example.com/users/Admin\@org6.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org6.example.com:7051 && export CORE_PEER_LOCALMSPID="Org6MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org6.example.com/peers/peer1.org6.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org7.example.com/users/Admin\@org7.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org7.example.com:7051 && export CORE_PEER_LOCALMSPID="Org7MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org7.example.com/peers/peer0.org7.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org7.example.com/users/Admin\@org7.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org7.example.com:7051 && export CORE_PEER_LOCALMSPID="Org7MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org7.example.com/peers/peer1.org7.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org8.example.com/users/Admin\@org8.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org8.example.com:7051 && export CORE_PEER_LOCALMSPID="Org8MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org8.example.com/peers/peer0.org8.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org8.example.com/users/Admin\@org8.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org8.example.com:7051 && export CORE_PEER_LOCALMSPID="Org8MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org8.example.com/peers/peer1.org8.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#========================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org9.example.com/users/Admin\@org9.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org9.example.com:7051 && export CORE_PEER_LOCALMSPID="Org9MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org9.example.com/peers/peer0.org9.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org9.example.com/users/Admin\@org9.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org9.example.com:7051 && export CORE_PEER_LOCALMSPID="Org9MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org9.example.com/peers/peer1.org9.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org10.example.com/users/Admin\@org10.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org10.example.com:7051 && export CORE_PEER_LOCALMSPID="Org10MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org10.example.com/peers/peer0.org10.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org10.example.com/users/Admin\@org10.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org10.example.com:7051 && export CORE_PEER_LOCALMSPID="Org10MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org10.example.com/peers/peer1.org10.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org11.example.com/users/Admin\@org11.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org11.example.com:7051 && export CORE_PEER_LOCALMSPID="Org11MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org11.example.com/peers/peer0.org11.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org11.example.com/users/Admin\@org11.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org11.example.com:7051 && export CORE_PEER_LOCALMSPID="Org11MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org11.example.com/peers/peer1.org11.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org12.example.com/users/Admin\@org12.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org12.example.com:7051 && export CORE_PEER_LOCALMSPID="Org12MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org12.example.com/peers/peer0.org12.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#========================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org12.example.com/users/Admin\@org12.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org12.example.com:7051 && export CORE_PEER_LOCALMSPID="Org12MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org12.example.com/peers/peer1.org12.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=====================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org13.example.com/users/Admin\@org13.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org13.example.com:7051 && export CORE_PEER_LOCALMSPID="Org13MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org13.example.com/peers/peer0.org13.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=====================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org13.example.com/users/Admin\@org13.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org13.example.com:7051 && export CORE_PEER_LOCALMSPID="Org13MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org13.example.com/peers/peer1.org13.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=====================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org14.example.com/users/Admin\@org14.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org14.example.com:7051 && export CORE_PEER_LOCALMSPID="Org14MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org14.example.com/peers/peer0.org14.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=====================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org14.example.com/users/Admin\@org14.example.com/msp/ && export CORE_PEER_ADDRESS=peer1.org14.example.com:7051 && export CORE_PEER_LOCALMSPID="Org14MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org14.example.com/peers/peer1.org14.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#======================================
+#switching to a persticular peer of perticular org
+
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org15.example.com/users/Admin\@org15.example.com/msp/ && export CORE_PEER_ADDRESS=peer0.org15.example.com:7051 && export CORE_PEER_LOCALMSPID="Org15MSP" && export CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/org15.example.com/peers/peer0.org15.example.com/tls/ca.crt;
+
+#updating acnhor peers
+peer channel update -o orderer.example.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/${CORE_PEER_LOCALMSPID}anchors.tx --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA >&log.txt;
+
+cat log.txt
+
+#make this peer join channel
+peer channel join -b mychannel.block;
+
+#install chaincode on this peer
+peer chaincode install -n mycc -v 1.0 -p github.com/hyperledger/fabric/examples/chaincode/go/chaincode_example02 >&log.txt
+
+cat log.txt
+
+#instantiate chaincode on this peer
+peer chaincode instantiate -o orderer.example.com:7050 --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -v 1.0 -c '{"Args":["init","a","100","b","200"]}' -P "OR	('Org3MSP.member')" >&log.txt
+
+cat log.txt
+
+#query the chaincode from this peer
+peer chaincode query -C $CHANNEL_NAME -n mycc -c '{"Args":["query","a"]}' >&log.txt;
+
+cat log.txt
+
+#invoking chaincode on thispeer
+peer chaincode invoke -o orderer.example.com:7050  --tls $CORE_PEER_TLS_ENABLED --cafile $ORDERER_CA -C $CHANNEL_NAME -n mycc -c '{"Args":["invoke","a","b","10"]}' >&log.txt;
+
+cat log.txt
+
+#=============================================
